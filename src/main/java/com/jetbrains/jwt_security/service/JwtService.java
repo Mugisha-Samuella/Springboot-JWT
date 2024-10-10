@@ -1,10 +1,8 @@
-package com.jetbrains.jwt_security.config;
-
-import org.springframework.stereotype.Service;
+package com.jetbrains.jwt_security.service;
 
 public class JwtService {
 
-    @Service
+
     public String extractUsername(String token) {
         return null;
     }
