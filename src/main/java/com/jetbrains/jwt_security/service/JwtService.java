@@ -4,8 +4,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Key;
+import java.util.Map;
 import java.util.function.Function;
 
 import static javax.crypto.Cipher.SECRET_KEY;
@@ -22,6 +24,16 @@ public class JwtService {
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
+    }
+
+    public String generateToken(
+            Map<String, Object> extractClaims,
+            UserDetails userDetails
+    ){
+        return Jwts
+                .builder()
+                .setClaims(extractClaims)
+                .setSubject(userDetails.getUsername())
     }
 
     private Claims extractAllClaims(String token){
